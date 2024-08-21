@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todolist_provider/features/todos/screens/todos_screens.dart';
 
 void main() {
@@ -11,12 +12,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter ToDo List',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        appBarTheme: const AppBarTheme(
+          foregroundColor: Color.fromARGB(255, 255, 255, 255),
+        ),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 89, 47, 161),
+            surface: const Color.fromARGB(255, 29, 28, 28)),
         useMaterial3: true,
       ),
-      home: const TodosScreens(title: 'Nego cabeça de gelo0'),
+      home: const TodosScreens(title: 'Lista de Tarefas - Arthur Selingin'),
+      localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
+      supportedLocales: const [Locale('pt', 'BR')],
     );
   }
 }

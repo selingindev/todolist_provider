@@ -9,8 +9,15 @@ class TodosScreens extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: const Border(
+          bottom: BorderSide(
+            color: Colors.white, 
+            width: 1)),
         title: Text(title),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
+        actions: [
+          IconButton(onPressed: () {}, 
+          icon: const Icon(Icons.add))],
+        elevation: 4,
       ),
       body: Container(),
     );
