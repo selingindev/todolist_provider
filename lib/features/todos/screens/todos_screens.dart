@@ -16,7 +16,9 @@ class TodosScreens extends StatelessWidget {
         title: Text(title),
         actions: [
           IconButton(onPressed: () {}, 
-          icon: const Icon(Icons.add))],
+          icon: const Icon(Icons.add,
+          size: 34)
+          )],
         elevation: 4,
       ),
       body: Container(),
