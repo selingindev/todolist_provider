@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter ToDo List',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          foregroundColor: Color.fromARGB(255, 255, 255, 255),
+          foregroundColor: Color.fromARGB(255, 0, 0, 0),
+          backgroundColor: Colors.white
         ),
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 89, 47, 161),

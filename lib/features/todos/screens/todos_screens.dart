@@ -4,8 +4,8 @@ import 'package:todolist_provider/shared/models/todos_model.dart';
 import '../widgets/todo_checkbox_widget.dart';
 
 final List<TodosModel> todos = [
-  TodosModel(title: 'Sou uma tarefa complicada', description: 'voce consegue'),
-  TodosModel(title: 'ok', description: 'ok')
+  TodosModel(title: 'Sou uma tarefa complicada', description: 'voce cnsegue'),
+  TodosModel(title: 'ok', description: 'ok'),
 ];
 
 class TodosScreens extends StatelessWidget {
@@ -40,7 +40,10 @@ class TodosScreens extends StatelessWidget {
         itemBuilder: (_, int index) {
           final todo = todos[index];
 
-          return ListTile(
+          return 
+          
+          
+          ListTile(
              leading: TodoCheckboxWidget(todo),
             title:  Text(todo.title ?? ''),
             subtitle: Text(todo.description ??  ''), // Substitua pelo subtítulo desejado
