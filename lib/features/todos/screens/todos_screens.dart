@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:todolist_provider/features/todos/widgets/list_tile_todo_widget.dart';
 import 'package:todolist_provider/shared/models/todos_model.dart';
 
-import '../widgets/todo_checkbox_widget.dart';
-
-final List<TodosModel> todos = [
-  TodosModel(title: 'Sou uma tarefa complicada', description: 'voce cnsegue'),
-  TodosModel(title: 'ok', description: 'ok'),
-];
+import 'package:todolist_provider/features/todos/widgets/todo_checkbox_widget.dart';
 
 class TodosScreens extends StatelessWidget {
   final String title;
@@ -35,22 +31,7 @@ class TodosScreens extends StatelessWidget {
         ],
         elevation: 4,
       ),
-      body: ListView.builder(
-        itemCount: todos.length,
-        itemBuilder: (_, int index) {
-          final todo = todos[index];
-
-          return 
-          
-          
-          ListTile(
-             leading: TodoCheckboxWidget(todo),
-            title:  Text(todo.title ?? ''),
-            subtitle: Text(todo.description ??  ''), // Substitua pelo subtítulo desejado
-            textColor: Colors.white,
-          );
-        },
-      ),
+      body: const ListTileTodoWidget(),
     );
   }
 }
