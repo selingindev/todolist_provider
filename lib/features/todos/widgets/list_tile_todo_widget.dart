@@ -33,12 +33,13 @@ class ListTileTodoWidget extends StatelessWidget {
         final todo = todos[index];
         return ListTile(
           leading: TodoCheckboxWidget(todo),
-          title: TextWidget(cfontSize:20,todo.title),
-          subtitle: TextWidget(cfontSize: 16, todo.description ?? ''), 
+          title: TextWidget(cfontSize:18,todo.title),
+          subtitle: TextWidget(cfontSize: 14, todo.description ?? ''), 
           trailing: TodoDateTimeWidget(todo),
           textColor: Colors.white,
           onLongPress: () => print("tapcheck"),
-          minVerticalPadding: 20,
+          minVerticalPadding: 16,
+
         );
       },
     );
