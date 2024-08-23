@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_provider/features/todos/widgets/list_tile_todo_widget.dart';
-import 'package:todolist_provider/shared/models/todos_model.dart';
 
-import 'package:todolist_provider/features/todos/widgets/todo_checkbox_widget.dart';
 
 class TodosScreens extends StatelessWidget {
   final String title;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_provider/shared/models/todos_model.dart';
 import 'package:intl/intl.dart';
+import 'package:todolist_provider/shared/models/widgets/texts/text_widget.dart';
 
 class TodoDateTimeWidget extends StatelessWidget {
   final TodosModel todo;
@@ -16,10 +17,7 @@ class TodoDateTimeWidget extends StatelessWidget {
     }
 
     // Retorna o widget Text com a data formatada
-    return Text(formatarData(todo.date),
-    style: const TextStyle(
-      fontSize: 20
-    ),
+    return TextWidget(cfontSize: 12, formatarData(todo.date),
     );
   }
 }
