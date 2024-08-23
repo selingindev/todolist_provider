@@ -7,6 +7,6 @@ class TodoCheckboxWidget extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Checkbox(value: false, onChanged: (bool? isDone)=> Checkbox.adaptive);
+    return Checkbox(value: false, onChanged: (bool? isDone)=> print('art'));
   }
 }

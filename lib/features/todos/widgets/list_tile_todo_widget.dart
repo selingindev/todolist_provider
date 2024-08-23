@@ -12,6 +12,14 @@ final List<TodosModel> todos = [
   TodosModel(title: 'ok', description: 'ok'),
   TodosModel(title: 'ok', description: 'ok'),
   TodosModel(title: 'Sou uma tarefa complicada', description: 'voce cnsegue'),
+    TodosModel(title: 'ok', description: 'ok'),
+  TodosModel(title: 'Sou uma tarefa complicada', description: 'voce cnsegue'),
+    TodosModel(title: 'ok', description: 'ok'),
+  TodosModel(title: 'Sou uma tarefa complicada', description: 'voce cnsegue'),
+    TodosModel(title: 'ok', description: 'ok'),
+  TodosModel(title: 'Sou uma tarefa complicada', description: 'voce cnsegue'),
+    TodosModel(title: 'ok', description: 'ok'),
+  TodosModel(title: 'Sou uma tarefa complicada', description: 'voce cnsegue'),
 ];
 
 class ListTileTodoWidget extends StatelessWidget {
@@ -29,9 +37,8 @@ class ListTileTodoWidget extends StatelessWidget {
           subtitle: TextWidget(cfontSize: 16, todo.description ?? ''), 
           trailing: TodoDateTimeWidget(todo),
           textColor: Colors.white,
-          onLongPress: () => {
-            print("artu")
-          },
+          onLongPress: () => print("tapcheck"),
+          minVerticalPadding: 20,
         );
       },
     );
