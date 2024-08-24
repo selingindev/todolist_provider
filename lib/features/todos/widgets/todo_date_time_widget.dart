@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_provider/shared/models/todos_model.dart';
 import 'package:intl/intl.dart';
-import 'package:todolist_provider/shared/models/widgets/texts/text_widget.dart';
+import 'package:todolist_provider/shared/widgets/texts/text_widget.dart';
 
 class TodoDateTimeWidget extends StatelessWidget {
   final TodosModel todo;
