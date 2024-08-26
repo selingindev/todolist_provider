@@ -1,6 +1,6 @@
 # todolist_provider
 
-A new Flutter project.
+Uma TodoList utilizando arquitetura limpa em glitter 
 
 ## Getting Started
 
