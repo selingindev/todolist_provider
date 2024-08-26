@@ -1,6 +1,6 @@
 # todolist_provider
 
-Uma TodoList utilizando arquitetura limpa em glitter 
+Uma TodoList utilizando arquitetura limpa em flutter 
 
 ## Getting Started
 
