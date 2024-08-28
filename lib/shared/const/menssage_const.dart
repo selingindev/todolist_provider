@@ -1,0 +1,1 @@
+const defaultErrorMenssage = "Não foi possível realizar isto agora, tente novamente.";
