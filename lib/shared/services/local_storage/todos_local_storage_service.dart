@@ -28,4 +28,23 @@ class TodosLocalStorageService implements ITodosLocalStorageService {
       return defaultErrorMenssage;
     }
   }
+
+  @override
+  Future<(String? error, List<TodosModel>? todos)> getTodos() async {
+    try {
+      final String? todosJson = await _iLocalStorageService.get(todosKey);
+      if (todosJson != null) {
+        final todos = (jsonDecode(todosJson) as List)
+            .map<TodosModel>((todo) => TodosModel.fromMap(todo))
+            .toList();
+        return (null, todos);
+      }
+      return (null, <TodosModel>[]);
+    } on LocalStorageException {
+      return ("Erro ao Salvar Tarefas", null);
+    } catch (error, st) {
+      log("Error Saving todos", error: error, stackTrace: st);
+      return (defaultErrorMenssage, null);
+    }
+  }
 }
