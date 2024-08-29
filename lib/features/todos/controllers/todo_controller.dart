@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:todolist_provider/shared/interfaces/done_todos_local_storage_interface.dart';
 import 'package:todolist_provider/shared/interfaces/todos_local_storage_interface.dart';
 import 'package:todolist_provider/shared/models/todos_model.dart';
 
-class TodoController {
+class TodoController extends ChangeNotifier{
   final ITodosLocalStorageService _iTodosLocalStorageService;
   final IDoneTodosLocalStoragesService _iDoneTodosLocalStoragesService;
 
@@ -20,6 +21,13 @@ class TodoController {
       todos
         ..clear()
         ..addAll(loadedTodos!);
+    
+      sortTodosByDate();
     }
+  }
+
+  void sortTodosByDate(){
+    todos.sort((todoA, todoB) => todoA.date.compareTo(todoB.date));
+    notifyListeners();
   }
 }
