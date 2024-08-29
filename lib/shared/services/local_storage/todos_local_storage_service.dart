@@ -24,7 +24,7 @@ class TodosLocalStorageService implements ITodosLocalStorageService {
     } on LocalStorageException {
       return "Erro ao Salvar Tarefas";
     } catch (error, st) {
-      log("Error Saving todos", error: error, stackTrace: st);
+      log("Error Saving done todos", error: error, stackTrace: st);
       return defaultErrorMenssage;
     }
   }
@@ -41,9 +41,9 @@ class TodosLocalStorageService implements ITodosLocalStorageService {
       }
       return (null, <TodosModel>[]);
     } on LocalStorageException {
-      return ("Erro ao Salvar Tarefas", null);
+      return ("Erro ao carregar Tarefas", null);
     } catch (error, st) {
-      log("Error Saving todos", error: error, stackTrace: st);
+      log("Error Saving done todos", error: error, stackTrace: st);
       return (defaultErrorMenssage, null);
     }
   }
