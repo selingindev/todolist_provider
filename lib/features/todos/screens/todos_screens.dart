@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todolist_provider/features/todos/controllers/todo_controller.dart';
 import 'package:todolist_provider/features/todos/widgets/list_tile_todo_widget.dart';
-
 
 class TodosScreens extends StatefulWidget {
   final String title;
@@ -12,8 +13,36 @@ class TodosScreens extends StatefulWidget {
 }
 
 class _TodosScreensState extends State<TodosScreens> {
+  bool isLoading = true;
+  String? error;
 
-  
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadTodosAndDonesTodos();
+    });
+  }
+
+  Future<void> loadTodosAndDonesTodos() async {
+    isLoading = true;
+    error = null;
+
+    final todoCtrl = context.read()<TodoController>();
+    final String? errorLoadingTodos = await todoCtrl.loadTodos();
+
+    final String? errorLoadingDoneTodos = await todoCtrl.loadDoneTodos();
+
+    if(errorLoadingTodos != null || errorLoadingDoneTodos != null){
+      setState(() {
+        error = errorLoadingTodos ?? errorLoadingDoneTodos;
+      });
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
