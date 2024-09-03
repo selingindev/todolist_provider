@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todolist_provider/features/add_todos/screens/add_todo_screen.dart';
 import 'package:todolist_provider/features/todos/controllers/todo_controller.dart';
 import 'package:todolist_provider/features/todos/widgets/add_todo_icon_button_widget.dart';
 import 'package:todolist_provider/features/todos/widgets/list_tile_todo_widget.dart';
@@ -18,7 +19,7 @@ const TodosScreens({super.key, required this.title});
 class _TodosScreensState extends State<TodosScreens> {
 
   bool isLoading = true;
-  String? error ;
+  String? error;
 
   @override
   void initState() {
@@ -47,6 +48,12 @@ class _TodosScreensState extends State<TodosScreens> {
     });
   }
 
+      void  _goToAddTodoScreen(){
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const AddTodoScreen(),),
+      );
+    }
+
   @override
   Widget build(BuildContext context) {
     
@@ -60,8 +67,8 @@ class _TodosScreensState extends State<TodosScreens> {
           ),
         ),
         title: Text(widget.title),
-        actions: const [
-         AddTodoIconButtonWidget(),
+        actions: [
+         AddTodoIconButtonWidget(goToAddTodoScreen: _goToAddTodoScreen),
         ],
         elevation: 4, 
       ),
