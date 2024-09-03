@@ -24,7 +24,7 @@ class TodoController extends ChangeNotifier {
 
       sortTodosByDate();
     }
-    return null;
+    return error;
   }
 
   void sortTodosByDate() {
