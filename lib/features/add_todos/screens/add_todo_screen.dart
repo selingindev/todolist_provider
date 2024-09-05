@@ -21,9 +21,9 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
         child: Padding(padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
-          child: const Column(
+          child: Column(
             children: [
-              TextInputWidget(controller: controller, focusNode: focusNode, label: 'Título'),
+             TextInputWidget(controller: TextEditingController(), focusNode:FocusNode(), label: 'Título'),
             ],
           )),
         ),
