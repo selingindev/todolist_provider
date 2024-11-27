@@ -38,7 +38,6 @@ class AuthGate extends StatelessWidget {
             },
           );
         }
-
         return TodosScreens(
           title: 'Lista de Tarefas - ${snapshot.data!.email}',
         );
