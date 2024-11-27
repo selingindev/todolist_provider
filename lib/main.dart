@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist_provider/features/todos/controllers/todo_controller.dart';
-import 'package:todolist_provider/features/todos/screens/todos_screens.dart';
+import 'package:todolist_provider/features/todos/screens/auth_gate.dart';
 import 'package:todolist_provider/shared/services/local_storage/done_todos_local_storage_service.dart';
 import 'package:todolist_provider/shared/services/local_storage/local_storage_service.dart';
 import 'package:todolist_provider/shared/services/local_storage/todos_local_storage_service.dart';
 import 'firebase_options.dart';
 
 void main() async{
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -37,10 +40,10 @@ class MyApp extends StatelessWidget {
           ),
           colorScheme: ColorScheme.fromSeed(
               seedColor: const Color.fromARGB(255, 89, 47, 161),
-              surface: const Color.fromARGB(255, 29, 28, 28)),
+              surface: const Color.fromARGB(255, 255, 255, 255)),
           useMaterial3: true,
         ),
-        home: const TodosScreens(title: 'Lista de Tarefas'),
+        home: const AuthGate(),
         localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
         supportedLocales: const [Locale('pt', 'BR')],
       ),
