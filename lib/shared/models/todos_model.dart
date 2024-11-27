@@ -27,6 +27,7 @@ class TodosModel {
         description: map['description'],
         cDate: DateTime.fromMillisecondsSinceEpoch(
           map['date'],
-        ));
+        ),
+      );
   }
 }

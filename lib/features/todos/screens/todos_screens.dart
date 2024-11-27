@@ -91,37 +91,42 @@ class _TodosScreensState extends State<TodosScreens> {
           ),
           const SizedBox(width: 12,)
         ],
-        automaticallyImplyLeading: false,
+        
         elevation: 4,
       ),
       floatingActionButton: AddTodoIconButtonWidget(goToAddTodoScreen: _goToAddTodoScreen),
-      body: Expanded(
-        flex: 1,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: isLoading || error != null
-              ? LoadingErrorWidget(
-                  isLoading: isLoading,
-                  error: error,
-                  loadTodosAndDoneTodos: loadTodosAndDonesTodos)
-              : todosCrtl.todos.isEmpty
-                  ? const Center(
-                      child: TextWidget(
-                        'Você não possui ou não adicionou nenhuma tarefa!',
-                        
-                        cfontSize: 18.0,
-                      ),
-                    )
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: todosCrtl.todos.length,
-                      itemBuilder: (_, int index) {
-                        final todo = todosCrtl.todos[index];
-
-                        return ListTileTodoWidget(todo);
-                      },
-                    ),
-        ),
+  
+      body: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: isLoading || error != null
+                  ? LoadingErrorWidget(
+                      isLoading: isLoading,
+                      error: error,
+                      loadTodosAndDoneTodos: loadTodosAndDonesTodos)
+                  : todosCrtl.todos.isEmpty
+                      ? const Center(
+                          child: TextWidget(
+                            'Você não possui ou não adicionou nenhuma tarefa!',
+                            
+                            cfontSize: 18.0,
+                          ),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: todosCrtl.todos.length,
+                          itemBuilder: (_, int index) {
+                            final todo = todosCrtl.todos[index];
+          
+                            return ListTileTodoWidget(todo);
+                          },
+                        ),
+            ),
+          ),
+        ],
       ),
     );
   }
