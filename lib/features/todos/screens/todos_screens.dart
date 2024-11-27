@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist_provider/features/add_todos/screens/add_todo_screen.dart';
@@ -70,13 +71,30 @@ class _TodosScreensState extends State<TodosScreens> {
         ),
         title: Text(widget.title),
         actions: [
-          AddTodoIconButtonWidget(goToAddTodoScreen: _goToAddTodoScreen),
-          IconButton(onPressed: (){}, icon: const Icon(Icons.person), tooltip: 'Sair',),
+          IconButton(
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute<ProfileScreen>(
+                  builder: (context) => ProfileScreen(
+                    actions: [
+                      SignedOutAction((context) {
+                        Navigator.of(context).pop();
+                      })
+                    ],
+                  ),
+                ),
+              );
+            }, 
+            icon: const Icon(Icons.person), 
+            tooltip: 'Editar Perfil',
+          ),
+          const SizedBox(width: 12,)
         ],
+        automaticallyImplyLeading: false,
         elevation: 4,
-        
       ),
-      
+      floatingActionButton: AddTodoIconButtonWidget(goToAddTodoScreen: _goToAddTodoScreen),
       body: Expanded(
         flex: 1,
         child: Padding(
@@ -90,6 +108,7 @@ class _TodosScreensState extends State<TodosScreens> {
                   ? const Center(
                       child: TextWidget(
                         'Você não possui ou não adicionou nenhuma tarefa!',
+                        
                         cfontSize: 18.0,
                       ),
                     )
