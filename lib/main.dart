@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.white
           ),
           colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 39, 126, 249),
+              seedColor: const Color.fromARGB(255, 0, 170, 255),
               surface: const Color.fromARGB(255, 255, 255, 255)),
           useMaterial3: true,
         ),
