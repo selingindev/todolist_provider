@@ -62,7 +62,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
           key: _formKey,
           child: Column(
             children: [
-             TextInputWidget(controller: TextEditingController(), focusNode:FocusNode(), label: 'Título'),
+              TextInputWidget(controller: TextEditingController(), focusNode:FocusNode(), label: 'Título'),
             ],
           )),
         ),
