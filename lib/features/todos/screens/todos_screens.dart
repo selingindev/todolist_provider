@@ -28,6 +28,8 @@ class _TodosScreensState extends State<TodosScreens> {
     });
   }
 
+  
+
   Future<void> loadTodosAndDonesTodos() async {
     isLoading = true;
     error = null;
@@ -69,9 +71,12 @@ class _TodosScreensState extends State<TodosScreens> {
         title: Text(widget.title),
         actions: [
           AddTodoIconButtonWidget(goToAddTodoScreen: _goToAddTodoScreen),
+          IconButton(onPressed: (){}, icon: const Icon(Icons.person), tooltip: 'Sair',),
         ],
         elevation: 4,
+        
       ),
+      
       body: Expanded(
         flex: 1,
         child: Padding(
