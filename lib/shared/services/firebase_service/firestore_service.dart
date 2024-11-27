@@ -10,7 +10,11 @@ class FirestoreService implements IFirestoreService{
   @override
   Future<List<TodosModelFirebase>> getAll() async{
     final snapshot = await service.get();
-    List<TodosModelFirebase> todos = snapshot.docs.map((todo) => TodosModelFirebase.fromMap(todo as Map<String, dynamic>)).toList();
+    List<TodosModelFirebase> todos = snapshot.docs.map((doc) {
+      final todo = TodosModelFirebase.fromMap(doc.data());
+      todo.id = doc.id;
+      return todo;
+    }).toList();
     return todos;
     
   }
@@ -21,14 +25,23 @@ class FirestoreService implements IFirestoreService{
   }
   
   @override
-  Future<String?> delete(String title)async {
-    
+  Future<String?> delete(String id)async {
+    try {
+    await service.doc(id).delete();
+    return 'Sucesso';
+  } catch (e) {
+    return 'Error ao deletar: $e';
+  }
   }
   
   @override
-  Future<String?> update(String title) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<String?> update(String id, TodosModelFirebase newValues)async {
+    try{
+      await service.doc(id).update(newValues.toMap());
+      return 'Sucesso';
+    }catch (e){
+      return "Erro ao atualizar: $e";
+    }
   }
   
 }

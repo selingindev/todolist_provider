@@ -2,13 +2,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class TodosModelFirebase {
+  String? id;
   final String? description;
   final bool isDone;
   final User user;
   final DateTime date;
   final String title;
 
-  TodosModelFirebase({ required this.description, required this.title,required this.date,  required this.isDone, required this.user} );
+  TodosModelFirebase({this.id,  required this.description, required this.title,required this.date,  required this.isDone, required this.user} );
 
   Map<String, dynamic> toMap() {
     return {
