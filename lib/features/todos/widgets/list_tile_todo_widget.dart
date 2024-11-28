@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_provider/features/todos/widgets/todo_checkbox_widget.dart';
+import 'package:todolist_provider/shared/models/todos_model_firebase.dart';
 import 'package:todolist_provider/shared/widgets/texts/text_widget.dart';
 import 'todo_date_time_widget.dart';
 
 
 class ListTileTodoWidget extends StatelessWidget {
-  final dynamic todo;
+  final TodosModelFirebase todo;
 
   const ListTileTodoWidget(this.todo, {super.key});
 

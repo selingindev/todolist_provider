@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist_provider/features/add_todos/screens/add_todo_screen.dart';
 import 'package:todolist_provider/features/todos/controllers/controller_todo.dart';
-import 'package:todolist_provider/features/todos/controllers/todo_controller.dart';
 import 'package:todolist_provider/features/todos/widgets/add_todo_icon_button_widget.dart';
 import 'package:todolist_provider/features/todos/widgets/list_tile_todo_widget.dart';
 import 'package:todolist_provider/features/todos/widgets/loading_error_widget.dart';
@@ -36,14 +35,14 @@ class _TodosScreensState extends State<TodosScreens> {
     isLoading = true;
     error = null;
 
-    final todoCtrl = context.read<TodoController>();
-    final String? errorLoadingTodos = await todoCtrl.loadTodos();
+    final todoCtrl = context.read<ControllerTodo>();
+    final String? errorLoadingTodos = await todoCtrl.fetchTodos();
 
-    final String? errorLoadingDoneTodos = await todoCtrl.loadDoneTodos();
+    
 
-    if (errorLoadingTodos != null || errorLoadingDoneTodos != null) {
+    if (errorLoadingTodos != null ) {
       setState(() {
-        error = errorLoadingTodos ?? errorLoadingDoneTodos;
+        error = errorLoadingTodos;
       });
     }
     setState(() {

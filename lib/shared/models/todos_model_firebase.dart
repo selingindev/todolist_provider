@@ -3,7 +3,7 @@
 class TodosModelFirebase {
   String? id;
   final String? description;
-  final bool isDone;
+  bool isDone;
   final String userName;
   final DateTime date;
   final String title;

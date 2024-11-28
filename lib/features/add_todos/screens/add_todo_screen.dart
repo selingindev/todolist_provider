@@ -5,8 +5,6 @@ import 'package:todolist_provider/features/add_todos/widgets/date_time_input.dar
 import 'package:todolist_provider/features/add_todos/widgets/description_input_text.dart';
 import 'package:todolist_provider/features/add_todos/widgets/title_input_text.dart';
 import 'package:todolist_provider/features/todos/controllers/controller_todo.dart';
-import 'package:todolist_provider/features/todos/controllers/todo_controller.dart';
-import 'package:todolist_provider/shared/models/todos_model.dart';
 import 'package:todolist_provider/shared/models/todos_model_firebase.dart';
 import 'package:todolist_provider/shared/widgets/texts/text_widget.dart';
 
@@ -48,10 +46,15 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
     if(_formKey.currentState!.validate()){
       final todosCtrl = Provider.of<ControllerTodo>(context, listen:false);
       final user = auth.currentUser;
-      final name = user!.displayName;
+      final name = user!.displayName ?? user.email;
       final bool error = await todosCtrl.addTodo(
-        TodosModelFirebase(description: _descTEC.text, title: _titleTEC.text, date: todoDate, isDone: false, userName: name!), 
-        name
+        TodosModelFirebase(
+          description: _descTEC.text, 
+          title: _titleTEC.text,
+          date: todoDate, 
+          isDone: false, 
+          userName: name!,
+        ), 
       );
       if (context.mounted) {
         if(error){
