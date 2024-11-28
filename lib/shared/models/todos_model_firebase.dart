@@ -1,15 +1,14 @@
 
-import 'package:firebase_auth/firebase_auth.dart';
 
 class TodosModelFirebase {
   String? id;
   final String? description;
   final bool isDone;
-  final User user;
+  final String userName;
   final DateTime date;
   final String title;
 
-  TodosModelFirebase({this.id,  required this.description, required this.title,required this.date,  required this.isDone, required this.user} );
+  TodosModelFirebase({this.id,  required this.description, required this.title,required this.date,  required this.isDone, required this.userName} );
 
   Map<String, dynamic> toMap() {
     return {
@@ -17,13 +16,13 @@ class TodosModelFirebase {
       'title': title,
       'description': description,
       'date': date.microsecondsSinceEpoch,
-      'user': user,
+      'user': userName,
     };
   }
 
   factory TodosModelFirebase.fromMap(Map<String, dynamic> map) {
     return TodosModelFirebase(
-        user: map['user'],
+        userName: map['user'],
         title: map['title'],
         description: map['description'],
         date: DateTime.fromMillisecondsSinceEpoch(
@@ -32,5 +31,6 @@ class TodosModelFirebase {
         isDone: map['isdone'],
       );
   }
+
   
 }

@@ -35,18 +35,19 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
       _todoDateFN.dispose();
       super.dispose();
   }
+
   Future<void> _addTodo(BuildContext context) async{
     if(_formKey.currentState!.validate()){
       final todosCtrl = Provider.of<TodoController>(context, listen:false);
       final String? error = await todosCtrl.addTodos(TodosModel(title: _titleTEC.text, description: _descTEC.text , cDate: todoDate));
       
-    if(context.mounted){
-      if(error != null){
-
-      }else{ 
-        Navigator.of(context).pop();
+      if(context.mounted){
+        if(error != null){
+          
+        }else{ 
+          Navigator.of(context).pop();
+        }
       }
-    }
     }
   }
   @override
@@ -61,7 +62,9 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
           key: _formKey,
           child: Column(
             children: [
-              TextInputWidget(controller: TextEditingController(), focusNode:FocusNode(), label: 'Título'),
+              TextInputWidget(controller: TextEditingController(), focusNode:FocusNode(), label: 'Título',),
+              IconButton(onPressed: () {_addTodo(context);}, icon: const Icon(Icons.check)),
+
             ],
           )),
         ),

@@ -46,6 +46,7 @@ class TextInputWidget extends StatelessWidget {
       maxLines: maxLines,
       onTap: onTap,
       readOnly: readOnly,
+      
     );
   }
 }
