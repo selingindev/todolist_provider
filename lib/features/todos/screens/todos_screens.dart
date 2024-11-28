@@ -91,7 +91,6 @@ class _TodosScreensState extends State<TodosScreens> {
           ),
           const SizedBox(width: 12,)
         ],
-        
         elevation: 4,
       ),
       floatingActionButton: AddTodoIconButtonWidget(goToAddTodoScreen: _goToAddTodoScreen),
