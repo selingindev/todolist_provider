@@ -2,6 +2,7 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist_provider/features/add_todos/screens/add_todo_screen.dart';
+import 'package:todolist_provider/features/todos/controllers/controller_todo.dart';
 import 'package:todolist_provider/features/todos/controllers/todo_controller.dart';
 import 'package:todolist_provider/features/todos/widgets/add_todo_icon_button_widget.dart';
 import 'package:todolist_provider/features/todos/widgets/list_tile_todo_widget.dart';
@@ -60,7 +61,7 @@ class _TodosScreensState extends State<TodosScreens> {
 
   @override
   Widget build(BuildContext context) {
-    final todosCrtl = context.watch<TodoController>();
+    final todosCrtl = context.watch<ControllerTodo>();
     return Scaffold(
       appBar: AppBar(
         shape: const Border(

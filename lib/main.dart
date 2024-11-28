@@ -2,8 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:todolist_provider/features/todos/controllers/controller_todo.dart';
 import 'package:todolist_provider/features/todos/controllers/todo_controller.dart';
 import 'package:todolist_provider/features/todos/screens/auth_gate.dart';
+import 'package:todolist_provider/shared/interfaces/firestore_interface/i_firestore_service.dart';
+import 'package:todolist_provider/shared/services/firebase_service/firestore_service.dart';
 import 'package:todolist_provider/shared/services/local_storage/done_todos_local_storage_service.dart';
 import 'package:todolist_provider/shared/services/local_storage/local_storage_service.dart';
 import 'package:todolist_provider/shared/services/local_storage/todos_local_storage_service.dart';
@@ -22,31 +25,47 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider (
-      create: (_) => TodoController(
-        DoneTodosLocalStorageService(
-          LocalStorageService(),
+    return MultiProvider(
+      providers: [
+        Provider<IFirestoreService>(
+          create: (_) => FirestoreService(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ControllerTodo(
+            context.read<IFirestoreService>(),
           ),
-        TodosLocalStorageService(
-        LocalStorageService(),),
-      ),
+        ),        
+        ChangeNotifierProvider(
+          create: (_) => TodoController(
+            DoneTodosLocalStorageService(
+              LocalStorageService(),
+            ),
+            TodosLocalStorageService(
+              LocalStorageService(),
+            ),
+          ),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter ToDo List',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           appBarTheme: const AppBarTheme(
-            foregroundColor: Color.fromARGB(255, 0, 0, 0),
-            backgroundColor: Colors.white
-          ),
+              foregroundColor: Color.fromARGB(255, 0, 0, 0),
+              backgroundColor: Colors.white),
           colorScheme: ColorScheme.fromSeed(
               seedColor: const Color.fromARGB(255, 0, 170, 255),
-              surface: const Color.fromARGB(255, 129, 88, 88)),
+              surface: const Color.fromARGB(255, 0, 0, 0)),
           useMaterial3: true,
         ),
         home: const AuthGate(),
-        localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate
+        ],
         supportedLocales: const [Locale('pt', 'BR')],
       ),
     );
+    
   }
 }

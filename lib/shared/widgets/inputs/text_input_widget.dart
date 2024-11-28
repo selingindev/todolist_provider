@@ -15,6 +15,7 @@ class TextInputWidget extends StatelessWidget {
       this.onFieldSubmitted,
       this.maxLines,
       this.minLines,
+      this.textInputAction = TextInputAction.next,
       this.onTap});
   final FocusNode focusNode;
   final String label;
@@ -26,6 +27,7 @@ class TextInputWidget extends StatelessWidget {
   final int? minLines;
   final void Function()? onTap;
   final bool readOnly;
+  final TextInputAction textInputAction;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -39,6 +41,7 @@ class TextInputWidget extends StatelessWidget {
         label: TextWidget(label),
         border: const OutlineInputBorder(),
       ),
+      textInputAction: textInputAction,
       textCapitalization: textCapitalization,
       validator: validator,
       onFieldSubmitted: onFieldSubmitted,

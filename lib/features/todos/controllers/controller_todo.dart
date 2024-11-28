@@ -21,12 +21,14 @@ class ControllerTodo extends ChangeNotifier {
     }
   }
 
-  Future<void> addTodo(TodosModelFirebase todo, String nameUser) async {
+  Future<bool> addTodo(TodosModelFirebase todo, String nameUser) async {
     try {
       await _firestoreService.save(todo);
       await fetchTodos(nameUser); 
+      return true;
     } catch (e) {
       print("Erro ao adicionar todo: $e");
+      return false;
     }
   }
 

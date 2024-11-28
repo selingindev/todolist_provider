@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextWidget extends StatelessWidget {
-  const TextWidget(this.text,{ super.key, Color? ccolor,  double? cfontSize, this.textAlign}) : fontSize = cfontSize ?? 16,  color = ccolor ?? Colors.black;
+  const TextWidget(this.text,{ super.key, Color? ccolor,  double? cfontSize, this.textAlign}) : fontSize = cfontSize ?? 16,  color = ccolor ?? Colors.white;
   
   final String text;
   final double fontSize;

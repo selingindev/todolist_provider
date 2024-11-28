@@ -1,12 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todolist_provider/features/add_todos/widgets/date_time_input.dart';
+import 'package:todolist_provider/features/add_todos/widgets/description_input_text.dart';
+import 'package:todolist_provider/features/add_todos/widgets/title_input_text.dart';
+import 'package:todolist_provider/features/todos/controllers/controller_todo.dart';
 import 'package:todolist_provider/features/todos/controllers/todo_controller.dart';
 import 'package:todolist_provider/shared/models/todos_model.dart';
-import 'package:todolist_provider/shared/widgets/inputs/text_input_widget.dart';
+import 'package:todolist_provider/shared/models/todos_model_firebase.dart';
 import 'package:todolist_provider/shared/widgets/texts/text_widget.dart';
 
 class AddTodoScreen extends StatefulWidget {
-  const AddTodoScreen({super.key});
+  
+  const AddTodoScreen({super.key,});
 
   @override
   State<AddTodoScreen> createState() => _AddTodoScreenState();
@@ -24,6 +30,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
     final _todoDateFN  = FocusNode();
     
     late DateTime todoDate;
+    final auth = FirebaseAuth.instance;
+    
 
     @override
   void dispose() {
@@ -36,16 +44,20 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
       super.dispose();
   }
 
-  Future<void> _addTodo(BuildContext context) async{
+  Future<void> _addTodo() async{
     if(_formKey.currentState!.validate()){
-      final todosCtrl = Provider.of<TodoController>(context, listen:false);
-      final String? error = await todosCtrl.addTodos(TodosModel(title: _titleTEC.text, description: _descTEC.text , cDate: todoDate));
-      
-      if(context.mounted){
-        if(error != null){
-          
-        }else{ 
+      final todosCtrl = Provider.of<ControllerTodo>(context, listen:false);
+      final user = auth.currentUser;
+      final name = user!.displayName;
+      final bool error = await todosCtrl.addTodo(
+        TodosModelFirebase(description: _descTEC.text, title: _titleTEC.text, date: todoDate, isDone: false, userName: name!), 
+        name
+      );
+      if (context.mounted) {
+        if(error){
           Navigator.of(context).pop();
+        }else{
+          print("Deu meu pode olhar no console ai zé");
         }
       }
     }
@@ -54,21 +66,55 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const TextWidget('Criar uma nova tarefa', ccolor: Colors.black, cfontSize: 20,),
-      ), 
-      body: SingleChildScrollView(
-        child: Padding(padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextInputWidget(controller: TextEditingController(), focusNode:FocusNode(), label: 'Título',),
-              IconButton(onPressed: () {_addTodo(context);}, icon: const Icon(Icons.check)),
-
-            ],
-          )),
+        title: const TextWidget(
+          'Criar uma nova tarefa',
+          ccolor: Colors.black,
+          cfontSize: 20,
         ),
-      )
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TitleInputText(
+                  titleTEC: _titleTEC,
+                  titleF: _titleFN,
+                  descriptionFN: _descFN,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                DescriptionInputText(
+                  descFN: _descFN,
+                  descriptionTEC: _descTEC,
+                  dateFN: _todoDateFN,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                DateTimeInput(
+                  controllerDate: _todoDateTEC,
+                  dateFn: _todoDateFN,
+                  addToDo: _addTodo,
+                  setDate: (DateTime date) {
+                    todoDate = date;
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                ElevatedButton(
+                  onPressed: _addTodo,
+                  child: const Text("Adicionar Tarefa"),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
