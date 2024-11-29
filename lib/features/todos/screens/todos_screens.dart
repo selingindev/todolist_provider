@@ -26,6 +26,7 @@ class _TodosScreensState extends State<TodosScreens> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       loadTodosAndDonesTodos();
+      
     });
   }
 
@@ -37,9 +38,7 @@ class _TodosScreensState extends State<TodosScreens> {
 
     final todoCtrl = context.read<ControllerTodo>();
     final String? errorLoadingTodos = await todoCtrl.fetchTodos();
-
     
-
     if (errorLoadingTodos != null ) {
       setState(() {
         error = errorLoadingTodos;
@@ -78,7 +77,7 @@ class _TodosScreensState extends State<TodosScreens> {
                 MaterialPageRoute<ProfileScreen>(
                   builder: (context) => ProfileScreen(
                     actions: [
-                      SignedOutAction((context) {
+                      SignedOutAction((context) async{
                         Navigator.of(context).pop();
                       })
                     ],
@@ -110,7 +109,6 @@ class _TodosScreensState extends State<TodosScreens> {
                       ? const Center(
                           child: TextWidget(
                             'Você não possui ou não adicionou nenhuma tarefa!',
-                            
                             cfontSize: 18.0,
                           ),
                         )
@@ -119,7 +117,6 @@ class _TodosScreensState extends State<TodosScreens> {
                           itemCount: todosCrtl.todos.length,
                           itemBuilder: (_, int index) {
                             final todo = todosCrtl.todos[index];
-          
                             return ListTileTodoWidget(todo);
                           },
                         ),

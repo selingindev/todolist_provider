@@ -35,7 +35,7 @@ class TextInputWidget extends StatelessWidget {
       focusNode: focusNode,
       autofocus: autoFocus,
       style: const TextStyle(
-        color: Colors.white,
+        color: Colors.black,
       ),
       decoration: InputDecoration(
         label: TextWidget(label),

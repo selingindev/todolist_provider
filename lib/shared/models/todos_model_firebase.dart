@@ -15,7 +15,7 @@ class TodosModelFirebase {
       'isdone': isDone,
       'title': title,
       'description': description,
-      'date': date.microsecondsSinceEpoch,
+      'date': date.millisecondsSinceEpoch,
       'user': userName,
     };
   }

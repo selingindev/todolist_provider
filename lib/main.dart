@@ -54,8 +54,8 @@ class MyApp extends StatelessWidget {
               foregroundColor: Color.fromARGB(255, 0, 0, 0),
               backgroundColor: Colors.white),
           colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 0, 170, 255),
-              surface: const Color.fromARGB(255, 0, 0, 0)),
+              seedColor: const Color.fromARGB(255, 0, 147, 221),
+              surface: const Color.fromARGB(255, 255, 255, 255)),
           useMaterial3: true,
         ),
         home: const AuthGate(),

@@ -8,21 +8,54 @@ class ControllerTodo extends ChangeNotifier {
 
   final IFirestoreService _firestoreService;
 
-  List<TodosModelFirebase> _todos = [];
-  List<TodosModelFirebase> get todos => _todos;
+  List<TodosModelFirebase> todos = [];
+  
   List<TodosModelFirebase> doneTodo = [];
   final user = FirebaseAuth.instance.currentUser;
 
+  User? currentUser;
+  
+
   ControllerTodo(this._firestoreService);
 
+  void initializeAuthListener() async{
+    FirebaseAuth.instance.authStateChanges().listen(
+      (User? user) async{
+        if (user != null) {
+          currentUser = user;
+  print("Mudando user para: ${user.displayName ?? user.email}");
+    await fetchTodos(); 
+    print('Alterando todos');
+
+  } else {
+    todos.clear(); // Limpa a lista se não houver usuário
+  }
+  notifyListeners(); 
+      }
+    );
+}
+// Atualiza o estado do app
+    
+  
+
   Future<String?> fetchTodos() async {
-    try {
-      _todos = await _firestoreService.getAll(user!.displayName!);
-      notifyListeners(); 
+  try {
+    if(currentUser == null) { 
+      todos.clear();
+      print('nenhum user');
+      return 'Nenhum usuário autenticado!';
+    }else{
+      todos.clear();
+      todos = await _firestoreService.getAll(currentUser!.displayName ?? currentUser!.email!);
+      print('Pegando todos para: ${currentUser!.email ?? currentUser!.displayName!}');
+      
       return null;
-    } catch (e) {
-      return "Erro ao buscar todos: $e";
     }
+    
+  } catch (e) {
+    return "Erro ao buscar todos: $e";
+  }
+
   }
 
   Future<bool> addTodo(TodosModelFirebase todo,) async {
@@ -59,7 +92,4 @@ class ControllerTodo extends ChangeNotifier {
       print("Erro ao deletar todo: $e");
     }
   }
-
-  
-  
 }

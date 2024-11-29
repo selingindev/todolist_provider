@@ -8,14 +8,33 @@ import 'package:todolist_provider/shared/models/todos_model_firebase.dart';
 class FirestoreService implements IFirestoreService{
   var service = FirebaseFirestore.instance.collection('todos');
   @override
-  Future<List<TodosModelFirebase>> getAll(String name) async{
-    final snapshot = await service.where('user', isEqualTo: name).get();
+Future<List<TodosModelFirebase>> getAll(String name) async{
+    try {
+  final snapshot = await service.where('user', isEqualTo: name).get(const GetOptions(source: Source.server));
+  print('Procurando todo... para $name');
+  print('Total de todos encontradas: ${snapshot.docs.length}');
+  if(snapshot.docs.isNotEmpty){
+    print("achou todo: $snapshot");
     final List<TodosModelFirebase> todos = snapshot.docs.map(
-      (doc) => TodosModelFirebase.fromMap(doc.data()),
-    ).toList();
-    return todos;
-    
+    (doc) {
+      final todo = TodosModelFirebase.fromMap(doc.data());
+      todo.id = doc.id;
+      return todo;
+    }
+  ).toList();
+  return todos;
+  }else{
+    return [];
   }
+  
+}  catch (e) {
+  // TODO
+  print('Erro ao pegar todos : $e');
+  return [];
+}
+  }
+
+
 
   @override
   Future<void> save(TodosModelFirebase todo) async {

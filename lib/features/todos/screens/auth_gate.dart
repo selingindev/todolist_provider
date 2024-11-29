@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todolist_provider/features/todos/controllers/controller_todo.dart';
 import 'package:todolist_provider/features/todos/screens/todos_screens.dart';
 
 
@@ -13,6 +15,7 @@ class AuthGate extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
+
         if (!snapshot.hasData) {
           return SignInScreen(
             providers: [
@@ -38,6 +41,8 @@ class AuthGate extends StatelessWidget {
             },
           );
         }
+        final controller = context.read<ControllerTodo>();
+        controller.initializeAuthListener();
         return TodosScreens(
           title: 'Lista de Tarefas - ${snapshot.data!.displayName ?? snapshot.data!.email}',
         );
