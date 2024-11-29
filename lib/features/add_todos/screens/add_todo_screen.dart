@@ -30,6 +30,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
     late DateTime todoDate;
     final auth = FirebaseAuth.instance;
     
+    
 
     @override
   void dispose() {
@@ -56,9 +57,11 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
           userName: name!,
         ), 
       );
+      await todosCtrl.fetchTodos();
       if (context.mounted) {
         if(error){
           Navigator.of(context).pop();
+
         }else{
           print("Deu meu pode olhar no console ai zé");
         }

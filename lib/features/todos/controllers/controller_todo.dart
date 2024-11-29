@@ -40,17 +40,13 @@ class ControllerTodo extends ChangeNotifier {
 
   Future<String?> fetchTodos() async {
   try {
-    if(currentUser == null) { 
-      todos.clear();
-      print('nenhum user');
-      return 'Nenhum usuário autenticado!';
-    }else{
+    
       todos.clear();
       todos = await _firestoreService.getAll(currentUser!.displayName ?? currentUser!.email!);
       print('Pegando todos para: ${currentUser!.email ?? currentUser!.displayName!}');
       
       return null;
-    }
+    
     
   } catch (e) {
     return "Erro ao buscar todos: $e";
