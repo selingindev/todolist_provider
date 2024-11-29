@@ -20,6 +20,9 @@ class TodosScreens extends StatefulWidget {
 class _TodosScreensState extends State<TodosScreens> {
   bool isLoading = true;
   String? error;
+  bool filtrar = false;
+  bool isDone = false;
+  String?  selectedFilterText;
 
   @override
   void initState() {
@@ -30,14 +33,28 @@ class _TodosScreensState extends State<TodosScreens> {
     });
   }
 
-  
+ Future<void> filtroSelecionado(String filtro) async {
+  if (filtro == "A fazer" || filtro == "Feitos") {
+    filtrar = true;
+    if (filtro == "Feitos") {
+      isDone = true; // Use "=" para atribuição
+    } else {
+      isDone = false; // Use "=" para atribuição
+    }
+  } else {
+    filtrar = false;
+  }
+  loadTodosAndDonesTodos();
+}
+
 
   Future<void> loadTodosAndDonesTodos() async {
     isLoading = true;
     error = null;
-
+    print(isDone);
     final todoCtrl = context.read<ControllerTodo>();
-    final String? errorLoadingTodos = await todoCtrl.fetchTodos();
+    final String? errorLoadingTodos = await todoCtrl.fetchAllTodos(filtrar, isDone);
+  
     
     if (errorLoadingTodos != null ) {
       setState(() {
@@ -49,6 +66,7 @@ class _TodosScreensState extends State<TodosScreens> {
     });
   }
 
+
   void _goToAddTodoScreen() {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -59,6 +77,8 @@ class _TodosScreensState extends State<TodosScreens> {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> filters = ["Todas Tarefas", "A fazer", "Feitos"];
+  String? selectedFilter;
     final todosCrtl = context.watch<ControllerTodo>();
     return Scaffold(
       appBar: AppBar(
@@ -95,7 +115,29 @@ class _TodosScreensState extends State<TodosScreens> {
       floatingActionButton: AddTodoIconButtonWidget(goToAddTodoScreen: _goToAddTodoScreen),
   
       body: Column(
-        children: [
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [ 
+          Padding(
+            padding: EdgeInsets.only(top: 10, right: 10),
+            child: DropdownButton<String>(
+            value: selectedFilter,
+            hint: Text(selectedFilterText ?? "Escolha um filtro"),
+            items: filters.map((filter) {
+              return DropdownMenuItem<String>(
+                value: filter,
+                child: Text(filter),
+              );
+            }).toList(),
+            onChanged: (newValue) {
+              setState(() {
+                selectedFilter = newValue;
+                selectedFilterText = selectedFilter!;
+                print(selectedFilter);
+                filtroSelecionado(selectedFilter!);
+            });
+            },
+                    ),
+          ),
           Expanded(
             flex: 1,
             child: Padding(

@@ -1,38 +1,39 @@
-
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todolist_provider/shared/interfaces/firestore_interface/i_firestore_service.dart';
 import 'package:todolist_provider/shared/models/todos_model_firebase.dart';
 
-class FirestoreService implements IFirestoreService{
+class FirestoreService implements IFirestoreService {
   var service = FirebaseFirestore.instance.collection('todos');
+
   @override
-Future<List<TodosModelFirebase>> getAll(String name) async{
-    try {
-  final snapshot = await service.where('user', isEqualTo: name).get(const GetOptions(source: Source.server));
-  print('Procurando todo... para $name');
-  print('Total de todos encontradas: ${snapshot.docs.length}');
-  if(snapshot.docs.isNotEmpty){
-    print("achou todo: $snapshot");
-    final List<TodosModelFirebase> todos = snapshot.docs.map(
-    (doc) {
-      final todo = TodosModelFirebase.fromMap(doc.data());
-      todo.id = doc.id;
-      return todo;
+Future<List<TodosModelFirebase>> getAll(String name,{bool? filtrar, bool? isDone}) async {
+  try {
+    // Inicia a consulta com o filtro padrão pelo nome do usuário
+    var query = service.where('user', isEqualTo: name);
+
+     if (filtrar == true) {
+      query = query.where("isdone", isEqualTo: isDone);
     }
-  ).toList();
-  return todos;
-  }else{
+
+    final snapshot = await query.get(const GetOptions(source: Source.server));
+    print('Procurando todo... para $name com filtro isDONE = $isDone');
+    print('Total de todos encontrados: ${snapshot.docs.length}');
+
+    if (snapshot.docs.isNotEmpty) {
+      final List<TodosModelFirebase> todos = snapshot.docs.map((doc) {
+        final todo = TodosModelFirebase.fromMap(doc.data());
+        todo.id = doc.id;
+        return todo;
+      }).toList();
+      return todos;
+    } else {
+      return [];
+    }
+  } catch (e) {
+    print('Erro ao pegar todos : $e');
     return [];
   }
-  
-}  catch (e) {
-  // TODO
-  print('Erro ao pegar todos : $e');
-  return [];
 }
-  }
 
 
 
@@ -45,25 +46,24 @@ Future<List<TodosModelFirebase>> getAll(String name) async{
       print("Erro ao salvar todo: $e");
     }
   }
-  
+
   @override
-  Future<String?> delete(String id)async {
+  Future<String?> delete(String id) async {
     try {
-    await service.doc(id).delete();
-    return 'Sucesso';
-  } catch (e) {
-    return 'Error ao deletar: $e';
+      await service.doc(id).delete();
+      return 'Sucesso';
+    } catch (e) {
+      return 'Error ao deletar: $e';
+    }
   }
-  }
-  
+
   @override
-  Future<String?> update(String id, TodosModelFirebase newValues)async {
-    try{
+  Future<String?> update(String id, TodosModelFirebase newValues) async {
+    try {
       await service.doc(id).update(newValues.toMap());
       return 'Sucesso';
-    }catch (e){
+    } catch (e) {
       return "Erro ao atualizar: $e";
     }
   }
-  
 }
