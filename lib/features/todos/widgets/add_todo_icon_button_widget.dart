@@ -12,7 +12,9 @@ class AddTodoIconButtonWidget extends StatelessWidget {
     tooltip: 'Adicionar Tarefa',
             icon: const Icon(
               Icons.add,
-              size: 34,
+              color: Colors.red,
+              size: 48,
+            
             ),
           );
   }
