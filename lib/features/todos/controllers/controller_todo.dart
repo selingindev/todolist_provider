@@ -31,24 +31,28 @@ class ControllerTodo extends ChangeNotifier {
 // Atualiza o estado do app
 
   Future<String?> fetchAllTodos(filtro, isDone) async {
-    try {
-      todos.clear();
-        final userIdentifier = currentUser?.displayName ?? currentUser?.email;
-    if (userIdentifier == null) {
-        fetchAllTodos(filtro, isDone);
-      return "Não foi possível validar a autenticação do Usuário.";
-      
-    }
-      todos = await _firestoreService
-          .getAll(userIdentifier, filtrar: filtro, isDone: isDone);
-      notifyListeners();
-      print(
-          'Pegando todos para: ${currentUser!.email ?? currentUser!.displayName!}');
-
-      return null;
-    } catch (e) {
-      return "Erro ao buscar todos: $e";
-    }
+    if (user != null) {
+  try {
+    todos.clear();
+    final userIdentifier = user!.displayName ?? user!.email;
+/*   if (userIdentifier == null) {
+      fetchAllTodos(filtro, isDone);
+    return "Não foi possível validar a autenticação do Usuário.";
+    
+  } */
+    todos = await _firestoreService
+        .getAll(userIdentifier!, filtrar: filtro, isDone: isDone);
+    notifyListeners();
+    print(
+        'Pegando todos para: ${currentUser!.email ?? currentUser!.displayName!}');
+  
+    return null;
+  } catch (e) {
+    return "Erro ao buscar todos: $e";
+  }
+} else {
+  return 'User não encontrado';
+}
   }
 
   

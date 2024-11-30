@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ class _TodosScreensState extends State<TodosScreens> {
   bool filtrar = false;
   bool isDone = false;
   String?  selectedFilterText;
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -52,10 +54,10 @@ class _TodosScreensState extends State<TodosScreens> {
     isLoading = true;
     error = null;
     final todoCtrl = context.read<ControllerTodo>();
-    final String? errorLoadingTodos = await todoCtrl.fetchAllTodos(filtrar, isDone);
-  
-    
-    if (errorLoadingTodos != null ) {
+    final String? errorLoadingTodos;
+    if(user != null){
+      errorLoadingTodos = await todoCtrl.fetchAllTodos(filtrar, isDone);
+      if (errorLoadingTodos != null ) {
       setState(() {
         error = errorLoadingTodos;
       });
@@ -63,6 +65,10 @@ class _TodosScreensState extends State<TodosScreens> {
     setState(() {
       isLoading = false;
     });
+    }
+  
+    
+    
   }
 
 
