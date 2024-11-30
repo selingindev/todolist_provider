@@ -16,7 +16,7 @@ class ControllerTodo extends ChangeNotifier {
   ControllerTodo(this._firestoreService);
 
   void initializeAuthListener() async {
-    await FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) async {
       if (user != null) {
         currentUser = user;
         print("Mudando user para: ${user.displayName ?? user.email}");
@@ -37,7 +37,7 @@ class ControllerTodo extends ChangeNotifier {
     if (userIdentifier == null) {
         fetchAllTodos(filtro, isDone);
       return "Não foi possível validar a autenticação do Usuário.";
-      fetchAllTodos(filtro, isDone);
+      
     }
       todos = await _firestoreService
           .getAll(userIdentifier, filtrar: filtro, isDone: isDone);
