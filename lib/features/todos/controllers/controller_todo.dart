@@ -16,7 +16,7 @@ class ControllerTodo extends ChangeNotifier {
   ControllerTodo(this._firestoreService);
 
   void initializeAuthListener() async {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+    await FirebaseAuth.instance.authStateChanges().listen((User? user) async {
       if (user != null) {
         currentUser = user;
         print("Mudando user para: ${user.displayName ?? user.email}");
@@ -33,8 +33,14 @@ class ControllerTodo extends ChangeNotifier {
   Future<String?> fetchAllTodos(filtro, isDone) async {
     try {
       todos.clear();
+        final userIdentifier = currentUser?.displayName ?? currentUser?.email;
+    if (userIdentifier == null) {
+        fetchAllTodos(filtro, isDone);
+      return "Não foi possível validar a autenticação do Usuário.";
+      fetchAllTodos(filtro, isDone);
+    }
       todos = await _firestoreService
-          .getAll(currentUser!.displayName ?? currentUser!.email!, filtrar: filtro, isDone: isDone);
+          .getAll(userIdentifier, filtrar: filtro, isDone: isDone);
       notifyListeners();
       print(
           'Pegando todos para: ${currentUser!.email ?? currentUser!.displayName!}');
@@ -57,6 +63,7 @@ class ControllerTodo extends ChangeNotifier {
 
       return null;
     } catch (e) {
+      fetchAllTodos(false, false);
       return "Erro ao buscar todos: $e";
     }
   }
