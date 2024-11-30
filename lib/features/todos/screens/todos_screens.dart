@@ -51,7 +51,6 @@ class _TodosScreensState extends State<TodosScreens> {
   Future<void> loadTodosAndDonesTodos() async {
     isLoading = true;
     error = null;
-    print(isDone);
     final todoCtrl = context.read<ControllerTodo>();
     final String? errorLoadingTodos = await todoCtrl.fetchAllTodos(filtrar, isDone);
   
@@ -121,7 +120,7 @@ class _TodosScreensState extends State<TodosScreens> {
             padding: EdgeInsets.only(top: 10, right: 10),
             child: DropdownButton<String>(
             value: selectedFilter,
-            hint: Text(selectedFilterText ?? "Escolha um filtro"),
+            hint: Padding(padding: EdgeInsets.all(5), child: Text(selectedFilterText ?? "Escolha um filtro")),
             items: filters.map((filter) {
               return DropdownMenuItem<String>(
                 value: filter,
